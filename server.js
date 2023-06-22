@@ -5,7 +5,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import allTypeDefs from "./graphql/schemas/index.js";
 import allResolver from "./graphql/resolvers/index.js";
 // database
-const db =
+const mongo_url =
   "mongodb+srv://gowtampaul0:qNrzPMzK7PXQvrhI@cluster0.zusv9tn.mongodb.net/?retryWrites=true&w=majority";
 
 const PORT = 4000;
@@ -16,11 +16,11 @@ const server = new ApolloServer({
 });
 
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .connect(mongo_url, { useNewUrlParser: true })
   .then(() => {
     console.log("MongoDB Connect Successfully");
     return startStandaloneServer(server, {
-      listen: { port: process.env.PORT },
+      listen: { port: PORT },
       // context: context,
     });
   })
