@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 const customerSchema = gql`
-  type Customer { 
+  type Customer {
     _id: String
     name: String
     phone: String

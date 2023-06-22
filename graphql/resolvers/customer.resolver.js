@@ -29,16 +29,45 @@ const customerResolver = {
 
   Mutation: {
     createCustomer: async (_, { customerInput }) => {
-      console.log(customerInput);
       const result = await CustomerModel.create(customerInput);
-      // result.save();
       return {
         id: result.id,
-        ...result,
+        message: "Customer Create successfully",
       };
     },
-    deleteCustomer: () => "Delete cutstomer",
-    updateCustomer: () => "Update cutstomer",
+    deleteCustomer: async (_, { _id }) => {
+      try {
+        const customer = await CustomerModel.findById(_id);
+        if (!customer) {
+          throw new Error("Customer is Not found!");
+        }
+
+        const deleteC = (await CustomerModel.deleteOne({ _id })).deletedCount;
+        return {
+          isSuccess: deleteC,
+          message: "Customer deleted successfully",
+        };
+      } catch (err) {
+        throw new GraphQLError(err.message);
+      }
+    },
+
+    updateCustomer: async (_, { _id, customerUpdate }) => {
+      try {
+        const customer = await CustomerModel.findById(_id);
+        console.log("customerUpdate", customerUpdate);
+        if (!customer) {
+          throw new Error("Customer is Not found!");
+        }
+        const result = await CustomerModel.updateOne({ _id }, customerUpdate);
+        return {
+          id: result.id,
+          ...result,
+        };
+      } catch (err) {
+        throw new GraphQLError(err.message);
+      }
+    },
   },
 };
 

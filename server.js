@@ -13,15 +13,14 @@ const PORT = 4000;
 const server = new ApolloServer({
   typeDefs: allTypeDefs,
   resolvers: allResolver,
-  
 });
 
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => {
     console.log("MongoDB Connect Successfully");
     return startStandaloneServer(server, {
-      listen: { port: PORT },
+      listen: { port: process.env.PORT },
       // context: context,
     });
   })
