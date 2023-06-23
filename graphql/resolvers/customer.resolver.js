@@ -30,10 +30,7 @@ const customerResolver = {
   Mutation: {
     createCustomer: async (_, { customerInput }) => {
       const result = await CustomerModel.create(customerInput);
-      return {
-        id: result.id,
-        message: "Customer Create successfully",
-      };
+      return result;
     },
     deleteCustomer: async (_, { _id }) => {
       try {
@@ -62,7 +59,7 @@ const customerResolver = {
         const result = await CustomerModel.updateOne({ _id }, customerUpdate);
         return {
           id: result.id,
-          ...result,
+          customerUpdate,
         };
       } catch (err) {
         throw new GraphQLError(err.message);

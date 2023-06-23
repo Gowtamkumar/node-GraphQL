@@ -1,12 +1,14 @@
 import { Schema, model } from "mongoose";
 
-const customerSchema = new Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: [true, "please enter your  name"],
   },
-  phone: {
+  userName: {
     type: String,
+    unique: true,
+    required: [true, "please Enter Your user Name"],
   },
   email: {
     type: String,
@@ -16,10 +18,11 @@ const customerSchema = new Schema({
       "please add a valid email",
     ],
   },
-  address: {
+  password: {
     type: String,
+    required: [true, "please Enter Your password"],
   },
 });
 
-const CustomerModel = model("customers", customerSchema);
-export default CustomerModel;
+const UserModel = model("users", userSchema);
+export default UserModel;

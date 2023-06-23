@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 const customerTypeDefs = gql`
   type Customer {
@@ -7,7 +7,6 @@ const customerTypeDefs = gql`
     phone: String
     email: String
     address: String
-    // archive: Boolean
   }
 `;
 export default customerTypeDefs;

@@ -10,6 +10,8 @@ const mongo_url =
 
 const PORT = 4000;
 
+console.log(process.env.MONGO_URI);
+
 const server = new ApolloServer({
   typeDefs: allTypeDefs,
   resolvers: allResolver,

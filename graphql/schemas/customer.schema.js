@@ -1,14 +1,6 @@
 import gql from "graphql-tag";
 
 const customerSchema = gql`
-  type Customer {
-    _id: String
-    name: String
-    phone: String
-    email: String
-    address: String
-  }
-
   input CustomerInput {
     name: String!
     phone: String
