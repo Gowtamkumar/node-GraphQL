@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import "dotenv/config";
 
 const userSchema = new Schema({
   name: {
@@ -38,7 +39,7 @@ userSchema.pre("save", async function () {
 
 // jwt by token
 userSchema.methods.getSignJwtToken = function () {
-  return jwt.sign({ _id: this._id }, "USCEQURE_TOKEN", {
+  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
     expiresIn: "2h",
   });
 };
