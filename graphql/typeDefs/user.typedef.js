@@ -4,9 +4,10 @@ const userTypeDefs = gql`
   type User {
     _id: String
     name: String
-    userName: String
+    username: String
     email: String
     password: String
+    role: String
   }
 `;
 export default userTypeDefs;

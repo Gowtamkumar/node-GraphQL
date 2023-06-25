@@ -30,8 +30,9 @@ const customerResolver = {
   Mutation: {
     createCustomer: async (_, { customerInput }) => {
       const result = await CustomerModel.create(customerInput);
-      return result;
+      return { ...result.doc };
     },
+    
     deleteCustomer: async (_, { _id }) => {
       try {
         const customer = await CustomerModel.findById(_id);
@@ -56,9 +57,9 @@ const customerResolver = {
         if (!customer) {
           throw new Error("Customer is Not found!");
         }
-        const result = await CustomerModel.updateOne({ _id }, customerUpdate);
+        await CustomerModel.updateOne({ _id }, customerUpdate);
         return {
-          id: result.id,
+          ...customer.doc,
           customerUpdate,
         };
       } catch (err) {
