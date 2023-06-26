@@ -29,13 +29,12 @@ const context = async ({ req }) => {
     return {};
   }
 
-  const token = req.headers.authorization || "";
-  console.log("req", req);
+  const token = req.headers.bearer || "";
 
   const user = await getUser(token);
+
   if (!user) {
     throw new GraphQLError("User is not Authenticated");
-    // throwCustomError("User is not Authenticated", ErrorTypes.UNAUTHENTICATED);
   }
 
   // Add the user to the context
