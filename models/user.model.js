@@ -30,6 +30,10 @@ const userSchema = new Schema({
     required: [true, "please Add a role"],
     enum: ["Admin", "Employee"],
   },
+  status: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 // encript is LockManager, passorid bcrypt

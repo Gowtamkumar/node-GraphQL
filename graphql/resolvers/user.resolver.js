@@ -3,7 +3,11 @@ import UserModel from "../../models/user.model.js";
 
 const userResolver = {
   Query: {
-    getUsers: async (_, arg) => {
+    getUsers: async (_, arg, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
+
       try {
         const result = await UserModel.find();
         if (!result.length) {
@@ -15,7 +19,11 @@ const userResolver = {
       }
     },
 
-    getUser: async (_, { _id }) => {
+    getUser: async (_, { _id }, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
+
       try {
         const result = await UserModel.findById(_id);
         if (!result) {
@@ -90,8 +98,9 @@ const userResolver = {
         }
 
         const isDeleted = await UserModel.deleteOne({ _id });
+        console.log(isDeleted);
         return {
-          isSuccess: isDeleted,
+          isSuccess: isDeleted.acknowledged,
           message: "User deleted successfully",
         };
       } catch (error) {

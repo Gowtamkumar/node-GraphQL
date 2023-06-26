@@ -7,6 +7,7 @@ const userSchema = gql`
     email: String
     password: String
     role: String
+    status: Boolean
   }
 
   input SigninInput {
@@ -20,12 +21,14 @@ const userSchema = gql`
     email: String
     password: String
     role: String
+    status: Boolean
   }
 
   type UserSuccess {
     isSuccess: Boolean
     message: String!
   }
+  
   type UserWithToken {
     _id: String
     username: String
@@ -34,6 +37,7 @@ const userSchema = gql`
     password: String
     role: String
     token: String
+    status: Boolean
   }
   type Query {
     getUsers: [User]

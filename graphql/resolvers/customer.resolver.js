@@ -3,7 +3,10 @@ import CustomerModel from "../../models/customer.model.js";
 
 const customerResolver = {
   Query: {
-    getCustomers: async (__, arg) => {
+    getCustomers: async (__, arg, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
       try {
         const customers = await CustomerModel.find();
         if (!customers.length) {
@@ -14,7 +17,11 @@ const customerResolver = {
         throw new GraphQLError(err.message);
       }
     },
-    getCustomer: async (_, { _id }) => {
+
+    getCustomer: async (_, { _id }, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
       try {
         const customer = await CustomerModel.findById(_id);
         if (!customer) {
@@ -28,12 +35,19 @@ const customerResolver = {
   },
 
   Mutation: {
-    createCustomer: async (_, { customerInput }) => {
+    createCustomer: async (_, { customerInput }, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
       const result = await CustomerModel.create(customerInput);
       return { ...result.doc };
     },
-    
-    deleteCustomer: async (_, { _id }) => {
+
+    deleteCustomer: async (_, { _id }, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
+
       try {
         const customer = await CustomerModel.findById(_id);
         if (!customer) {
@@ -50,7 +64,11 @@ const customerResolver = {
       }
     },
 
-    updateCustomer: async (_, { _id, customerUpdate }) => {
+    updateCustomer: async (_, { _id, customerUpdate }, context) => {
+      if (context.user.role !== "Admin") {
+        throw new GraphQLError("You are not Authorized!");
+      }
+
       try {
         const customer = await CustomerModel.findById(_id);
         console.log("customerUpdate", customerUpdate);

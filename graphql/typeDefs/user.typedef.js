@@ -7,7 +7,8 @@ const userTypeDefs = gql`
     username: String
     email: String
     password: String
-    role: String
+    role: String,
+    status:Boolean
   }
 `;
 export default userTypeDefs;
