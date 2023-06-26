@@ -90,6 +90,7 @@ const userResolver = {
         userUpdate,
       };
     },
+
     deleteUser: async (_, { _id }) => {
       try {
         const result = await UserModel.findById(_id);
@@ -98,7 +99,6 @@ const userResolver = {
         }
 
         const isDeleted = await UserModel.deleteOne({ _id });
-        console.log(isDeleted);
         return {
           isSuccess: isDeleted.acknowledged,
           message: "User deleted successfully",

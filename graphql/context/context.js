@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
-
 import { GraphQLError } from "graphql";
 import UserModel from "../../models/user.model.js";
+import configEnv from "../../config/config.js";
 
 const getUser = async (token) => {
   try {
     if (token) {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, configEnv.JWT_SECRET);
       const user = await UserModel.findById(decoded._id);
       return user;
     }
